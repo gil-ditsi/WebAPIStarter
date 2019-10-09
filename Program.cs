@@ -18,6 +18,9 @@ namespace WebAPIStarter
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureHostConfiguration( (configDelegate) => {
+                    configDelegate.AddCommandLine(args);  //run dll --environment Dev|Prod|Stag|Whatevs
+                } )
                 .ConfigureAppConfiguration((configDelegate) => {
                     configDelegate.AddJsonFile("configuration.json", true, true);
                 })
