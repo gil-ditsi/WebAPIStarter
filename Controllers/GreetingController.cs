@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace WebAPIStarter.Controllers
 {
@@ -6,9 +7,15 @@ namespace WebAPIStarter.Controllers
     [Route("[controller]")]
     public class GreetingController : ControllerBase
     {
+        public string appName { get; set; }
+
+        public GreetingController(IConfiguration config){
+            appName = config.GetValue<string>("applicationName");
+        }
+
         [HttpGet]
         public string WhateverIWant(){
-            return "hi man!";
+            return this.appName;
         }
 
         [HttpGet("{num}")]

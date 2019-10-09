@@ -18,11 +18,14 @@ namespace WebAPIStarter
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((configDelegate) => {
+                    configDelegate.AddJsonFile("configuration.json", true, true);
+                })
                 .ConfigureWebHostDefaults(actionOfTest);
 
         private static Action<IWebHostBuilder> actionOfTest = 
             (webBuilder) => {
-                webBuilder.UseStartup<Startup>();
+                webBuilder.UseStartup<Startup>();                
             };
     }
 }
