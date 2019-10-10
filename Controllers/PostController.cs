@@ -22,7 +22,7 @@ namespace WebAPIStarter.Controllers
             return this.AllPosts.Find( x => x.Id == id );
         }
 
-        [HttpPost]    //Had to leave for a moment
+        [HttpPost]    
         public string CreatePost(Post post){
             try{
                 this.AllPosts.Add(post);
