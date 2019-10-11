@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +27,11 @@ namespace WebAPIStarter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            // services.AddResponseCaching();
+            services.AddMemoryCache();
+            services.AddSession(); 
+            services.AddMvc();
+            services.AddControllers();  
             // services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
@@ -37,13 +43,30 @@ namespace WebAPIStarter
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.Use(async (context, next) =>
+            // {
+            //     await next.Invoke();   
+            // });
 
+            app.Map("/hello", appbuilder => {
+                appbuilder.MapWhen(
+                    context => context.Request.Query.ContainsKey("name"),
+                    (appB) => {
+                        appB.Run(async newContext => {
+                            await newContext.Response.WriteAsync($"Hello { newContext.Request.Query["name"] }!!");
+                        });
+                    }
+                );
+            });
+
+            app.UseHttpsRedirection();  //OK
+            app.UseStaticFiles(); 
+            
             app.UseRouting();
-
+            
             app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.UseSession();
+            app.UseEndpoints(endpoints => //OK
             {
                 endpoints.MapControllers();
             });
