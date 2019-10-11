@@ -8,7 +8,6 @@ namespace WebAPIStarter.Controllers
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
-
         private List<Customer> customers;
         public CustomerController(){
             this.customers = new List<Customer>{
@@ -29,16 +28,18 @@ namespace WebAPIStarter.Controllers
         }
 
         [HttpPost]
-        public string Create(Customer newObject){
-            return "Mama mia";
+        [Consumes("application/xml")]
+        [Produces("application/xml", "application/json")]
+        public Customer Create(Customer newObject){
+            return newObject;
         }
 
-        [HttpPut]
-        public string Update(int Id, Customer changedObject){
+        [HttpPut("{id}")]
+        public string Update([FromRoute] int Id, [FromBody] Customer changedObject){
             return "Modified";
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public string Delete(int Id) {
             return "Thing No More";
         }
