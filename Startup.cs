@@ -29,7 +29,7 @@ namespace WebAPIStarter
         {
             // services.AddResponseCaching();
             services.AddMemoryCache();
-            services.AddSession(); 
+            services.AddSession();  
             services.AddMvc(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
             services.AddControllers();  
         }

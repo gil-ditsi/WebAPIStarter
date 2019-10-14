@@ -12,31 +12,62 @@ namespace WebAPIStarter.Controllers
 
         private List<Post> AllPosts { get; set; }
 
+        public PostController(){
+            this.AllPosts = new List<Post>(){
+                new Post(){Id = 1, Data = "String"}
+            };
+        }
+
         [HttpGet]
         public IEnumerable<Post> GetAll(){
             return this.AllPosts;
         }
 
         [HttpGet("{id}")]
-        public Post GetSpecific(int id){
-            return this.AllPosts.Find( x => x.Id == id );
+        public IActionResult GetSpecific([FromRoute]int id){
+            try{
+                var res = this.AllPosts.Find( x => x.Id == id );
+                if( res == null ) {
+                    return base.NotFound();
+                }else{
+                    return base.Ok(res);
+                }             
+            }catch(Exception e){
+                return base.NotFound(e);
+            }
+            // return base.Forbid();
         }
 
         [HttpPost]    
-        public string CreatePost(Post post){
-            try{
-                this.AllPosts.Add(post);
-                return "AOK";
-            }catch(Exception e){
-                return $"Not AOK because of error {e.Message}";
+        public IActionResult CreatePost([FromBody]Post post){
+            if(ModelState.IsValid){
+                try{
+                    //this.AllPosts.Add(post);
+                    var newRef = this.AllPosts.Find(x => x.Id == post.Id);
+                    if(newRef != null){
+                        return Ok(post);
+                        //There's no resource so it fails
+                        // return CreatedAtAction("GetSpecific", new{
+                        //     newRef.Id
+                        // });
+                    }else{
+                        return StatusCode(501);
+                    }
+                }catch(Exception e){
+                    return StatusCode(500, e);
+                }
+            }else{
+                return ValidationProblem();
+                //They're the same
+                // return BadRequest(ModelState);
             }
             
         }
 
-        [HttpPut]
-        public string ChangePost(Post post){
+        [HttpPut("{id}")]
+        public string ChangePost([FromRoute] int id, [FromBody]Post post){
             try{
-                var myRef = this.AllPosts.Find( x => x.Id == post.Id );
+                var myRef = this.AllPosts.Find( x => x.Id == id );
                 myRef.Data = post.Data;
                 return "AOK";
             }catch(Exception e){
