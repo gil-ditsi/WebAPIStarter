@@ -23,15 +23,20 @@ namespace WebAPIStarter.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Customer> GetAll(){
-            return this.customers;
+        public IActionResult GetAll(){
+            return Ok(this.customers);
         }
 
         [HttpPost]
         [Consumes("application/xml")]
         [Produces("application/xml", "application/json")]
-        public Customer Create(Customer newObject){
-            return newObject;
+        public IActionResult Create(Customer newObject){
+            if(ModelState.IsValid){
+                this.customers.Add(newObject);
+                return Created("someuri", newObject);
+            }else{
+                return ValidationProblem();
+            }
         }
 
         [HttpPut("{id}")]
