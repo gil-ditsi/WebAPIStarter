@@ -75,8 +75,8 @@ namespace WebAPIStarter.Controllers
             }
         }
 
-        [HttpDelete]
-        public IActionResult DeletePost(int id){
+        [HttpDelete("{id}")]
+        public IActionResult DeletePost([FromRoute] int id){
             try{
                 this.AllPosts.Remove(this.AllPosts.Find( x => x.Id == id ));
                 return StatusCode(410);;
