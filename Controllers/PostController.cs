@@ -19,8 +19,8 @@ namespace WebAPIStarter.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Post> GetAll(){
-            return this.AllPosts;
+        public IActionResult GetAll(){
+            return Ok(this.AllPosts);
         }
 
         [HttpGet("{id}")]
@@ -65,23 +65,23 @@ namespace WebAPIStarter.Controllers
         }
 
         [HttpPut("{id}")]
-        public string ChangePost([FromRoute] int id, [FromBody]Post post){
+        public IActionResult ChangePost([FromRoute] int id, [FromBody]Post post){
             try{
                 var myRef = this.AllPosts.Find( x => x.Id == id );
                 myRef.Data = post.Data;
-                return "AOK";
+                return Ok(myRef);
             }catch(Exception e){
-                return $"Not AOK because of error {e.Message}";
+                return StatusCode(501, e);
             }
         }
 
         [HttpDelete]
-        public string DeletePost(int id){
+        public IActionResult DeletePost(int id){
             try{
                 this.AllPosts.Remove(this.AllPosts.Find( x => x.Id == id ));
-                return "AOK no more";
+                return StatusCode(410);;
             }catch(Exception e){
-                return $"Not AOK because of error {e.Message}";
+                return StatusCode(501, e);
             }
         }
         
