@@ -18,8 +18,12 @@ namespace WebAPIStarter.Controllers
         }
 
         [HttpGet("{Id}")]
-        public Customer Read(int Id){
-            return this.customers.Find( custId  => custId.Id == Id );
+        public IActionResult Read(int Id){
+            var res = this.customers.Find( custId  => custId.Id == Id );
+            if( res != null)
+                return Ok(res);
+            else
+                return NotFound();
         }
 
         [HttpGet]
