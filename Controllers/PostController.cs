@@ -79,7 +79,7 @@ namespace WebAPIStarter.Controllers
         public IActionResult DeletePost([FromRoute] int id){
             try{
                 this.AllPosts.Remove(this.AllPosts.Find( x => x.Id == id ));
-                return StatusCode(410);;
+                return StatusCode(410);
             }catch(Exception e){
                 return StatusCode(501, e);
             }
