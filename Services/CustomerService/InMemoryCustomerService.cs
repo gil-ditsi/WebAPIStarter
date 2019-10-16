@@ -3,7 +3,7 @@ using WebAPIStarter.Models;
 
 namespace WebAPIStarter.Services.CustomerService
 {
-    public class InMemoryCustomerService : IService<Customer>
+    public class InMemoryCustomerService : IServiceOfT<Customer>
     {
         private IList<Customer> Customers { get; set; }
 

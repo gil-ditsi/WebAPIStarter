@@ -5,7 +5,7 @@ using WebAPIStarter.Models;
 
 namespace WebAPIStarter.Services.CustomerService
 {
-    public interface IService<T>
+    public interface IServiceOfT<T>
     {
         IList<T> GetAll();
         T GetOne(int id);

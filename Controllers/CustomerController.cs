@@ -11,7 +11,7 @@ namespace WebAPIStarter.Controllers
     public class CustomerController : ControllerBase
     {
         // private List<Customer> customers;
-        private IService<Customer> CustomerService {get; set;}
+        private IServiceOfT<Customer> CustomerService {get; set;}
 
         // public CustomerController()
         // {
@@ -21,9 +21,10 @@ namespace WebAPIStarter.Controllers
         //         // new Customer() { Id = 3, FirstName = "Gil3", LastName = "Hdz", Email = "mah.mail@man.com" }
         //     };
         // }
-        public CustomerController(IService<Customer> customerService = null){
+        public CustomerController(IServiceOfT<Customer> customerService){ // customerService = null){
 
-            this.CustomerService = customerService ?? new InMemoryCustomerService();
+            // this.CustomerService = customerService ?? new InMemoryCustomerService();
+            this.CustomerService = customerService;
 
         }
 

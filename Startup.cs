@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebAPIStarter.Models;
+using WebAPIStarter.Services.CustomerService;
 
 namespace WebAPIStarter
 {
@@ -28,10 +30,14 @@ namespace WebAPIStarter
         public void ConfigureServices(IServiceCollection services)
         {
             // services.AddResponseCaching();
+            
             services.AddMemoryCache();
             services.AddSession();  
             services.AddMvc(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
             services.AddControllers();  
+            services.AddTransient<IServiceOfT<Customer>, InMemoryCustomerService>();
+            //IOC --> Inversion of Control
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
