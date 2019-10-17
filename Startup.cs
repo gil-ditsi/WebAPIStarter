@@ -1,18 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+// using System;
+// using System.Collections.Generic;
+// using System.Linq;
+// using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Session;
+// using Microsoft.AspNetCore.HttpsPolicy;
+// using Microsoft.AspNetCore.Mvc;
+// using Microsoft.AspNetCore.Session;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using WebAPIStarter.Models;
+// using Microsoft.Extensions.Logging;
+using WebAPIStarter.Data;
+using WebAPIStarter.Data.Models;
 using WebAPIStarter.Services.CustomerService;
 
 namespace WebAPIStarter
@@ -35,7 +37,10 @@ namespace WebAPIStarter
             services.AddSession();  
             services.AddMvc(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
             services.AddControllers();  
-            services.AddTransient<IServiceOfT<Customer>, InMemoryCustomerService>();
+            services.AddTransient<IServiceOfT<Customer>, InMemoryDatabaseCustomerService>(); //Change and presto!
+            services.AddDbContext<WebAPIStarterContext>( options => {
+                options.UseInMemoryDatabase("WebAPIStarter"); //It can be anything
+            });
             //IOC --> Inversion of Control
 
         }

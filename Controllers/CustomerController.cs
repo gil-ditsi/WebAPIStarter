@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using WebAPIStarter.Models;
+using WebAPIStarter.Data.Models;
 using WebAPIStarter.Services.CustomerService;
 
 namespace WebAPIStarter.Controllers
@@ -44,7 +44,7 @@ namespace WebAPIStarter.Controllers
         }
 
         [HttpPost]
-        [Consumes("application/xml")]
+        [Consumes("application/xml", "application/json")]
         [Produces("application/xml", "application/json")]
         public IActionResult Create(Customer newObject){
             if(ModelState.IsValid){

@@ -1,7 +1,6 @@
 
 
 using System.Collections.Generic;
-using WebAPIStarter.Models;
 
 namespace WebAPIStarter.Services.CustomerService
 {

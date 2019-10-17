@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using WebAPIStarter.Models;
+using WebAPIStarter.Data.Models;
 
 namespace WebAPIStarter.Controllers
 {
