@@ -39,7 +39,12 @@ namespace WebAPIStarter
             services.AddControllers();  
             services.AddTransient<IServiceOfT<Customer>, InMemoryDatabaseCustomerService>(); //Change and presto!
             services.AddDbContext<WebAPIStarterContext>( options => {
-                options.UseInMemoryDatabase("WebAPIStarter"); //It can be anything
+                // options.UseInMemoryDatabase("WebAPIStarter"); //It can be anything
+                options.UseSqlite(
+                    Configuration.GetConnectionString("WebApiStarterDatabase"), 
+                    (optionsBuilder) => {
+                        optionsBuilder.MigrationsAssembly("WebAPIStarter");
+                    });
             });
             //IOC --> Inversion of Control
 
