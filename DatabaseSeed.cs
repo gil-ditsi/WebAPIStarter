@@ -87,9 +87,9 @@ namespace WebAPIStarter
                             new Customer
                             {
                                 Id = 2,
-                                FirstName = "Paul",
-                                LastName = "Goldschmidt",
-                                Email = "paul@cardinals.com",
+                                FirstName = "SOmebody",
+                                LastName = "OnceToldMe",
+                                Email = "The.world@isgonna.com",
                                 CustomerAddresses = new List<CustomerAddress> {
                                     new CustomerAddress{ CustomerId = 2, AddressId = 2 }
                                 }
